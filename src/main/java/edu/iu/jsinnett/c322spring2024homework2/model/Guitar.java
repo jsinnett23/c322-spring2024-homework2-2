@@ -6,6 +6,8 @@ import java.util.Objects;
 public class Guitar {
 
 
+    //small edit to see if I can get the github push to work
+
 
 
     //main variables
