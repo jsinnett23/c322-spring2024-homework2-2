@@ -1,4 +1,8 @@
 package edu.iu.jsinnett.c322spring2024homework2.controller;
+
+import edu.iu.jsinnett.c322spring2024homework2.enums.Builder;
+import edu.iu.jsinnett.c322spring2024homework2.enums.Type;
+import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
 import edu.iu.jsinnett.c322spring2024homework2.model.Guitar;
 import edu.iu.jsinnett.c322spring2024homework2.repository.InventoryRepository;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +22,12 @@ public class InventoryController {
     @GetMapping("/search")
     public List<Guitar> search(@RequestParam(required = false) String serialNumber,
                                @RequestParam(required = false) Double price,
-                               @RequestParam(required = false) String builder,
-                               @RequestParam(required = false) String type,
+                               @RequestParam(required = false) Builder builder,
+                               @RequestParam(required = false) Type type,
                                @RequestParam(required = false) String model,
-                               @RequestParam(required = false) String backWood,
-                               @RequestParam(required = false) String topWood) {
+                               @RequestParam(required = false) Wood backWood,
+                               @RequestParam(required = false) Wood topWood) {
+        // Create a new Guitar object using enums for builder, type, backWood, and topWood
         Guitar searchCriteria = new Guitar(serialNumber, price, builder, type, model, backWood, topWood);
         return inventoryRepository.search(searchCriteria);
     }

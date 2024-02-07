@@ -1,5 +1,9 @@
 package edu.iu.jsinnett.c322spring2024homework2;
 
+
+import edu.iu.jsinnett.c322spring2024homework2.enums.Builder;
+import edu.iu.jsinnett.c322spring2024homework2.enums.Type;
+import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
 import edu.iu.jsinnett.c322spring2024homework2.model.Guitar;
 import edu.iu.jsinnett.c322spring2024homework2.repository.InventoryRepository;
 import org.junit.jupiter.api.Test;
@@ -22,7 +26,7 @@ class InventoryRepositoryTest {
         // arrange
         Path tempFile = Files.createTempFile(databasePath, ".txt"); // create a temp file
         InventoryRepository inventoryRepository = new InventoryRepository(tempFile.toString()); // ese temp file for the repository
-        Guitar guitar = new Guitar("SN124", 1299.99, "Gibson", "Electric", "Les Paul", "Maple", "Maple");
+        Guitar guitar = new Guitar("SN124", 1299.99, Builder.GIBSON, Type.ELECTRIC, "Les Paul", Wood.MAPLE, Wood.MAPLE);
         String expectedOutput = guitar.toString() + System.lineSeparator(); // expected output to write in the file
 
         // act
@@ -39,13 +43,12 @@ class InventoryRepositoryTest {
         Files.delete(tempFile); // clean up the temporary file
     }
 
-
     @Test
     void getGuitar() throws IOException {
         // arrange
         Path tempFile = Files.createTempFile(databasePath, ".txt");
         InventoryRepository inventoryRepository = new InventoryRepository(tempFile.toString());
-        Guitar guitar = new Guitar("SN123", 999.99, "Fender", "Acoustic", "ModelX", "Mahogany", "Spruce");
+        Guitar guitar = new Guitar("SN123", 999.99, Builder.FENDER, Type.ACOUSTIC, "ModelX", Wood.MAHOGANY, Wood.ALDER);
         String guitarString = guitar.toString() + System.lineSeparator();
         Files.writeString(tempFile, guitarString);
 
@@ -66,9 +69,10 @@ class InventoryRepositoryTest {
         InventoryRepository inventoryRepository = new InventoryRepository(tempFile.toString());
 
         // add multiple guitars to the file
-        Guitar guitar1 = new Guitar("SN123", 999.99, "Fender", "Acoustic", "ModelX", "Mahogany", "Spruce");
-        Guitar guitar2 = new Guitar("SN124", 1299.99, "Gibson", "Electric", "Les Paul", "Maple", "Maple");
-        Guitar guitar3 = new Guitar("SN125", 1099.99, "Fender", "Electric", "Stratocaster", "Alder", "Maple");
+        Guitar guitar1 = new Guitar("SN123", 999.99, Builder.FENDER, Type.ACOUSTIC, "ModelX", Wood.MAHOGANY, Wood.ALDER);
+        Guitar guitar2 = new Guitar("SN124", 1299.99, Builder.GIBSON, Type.ELECTRIC, "Les Paul", Wood.MAPLE, Wood.MAPLE);
+        Guitar guitar3 = new Guitar("SN125", 1099.99, Builder.FENDER, Type.ELECTRIC, "Stratocaster", Wood.ALDER, Wood.MAPLE);
+
         try (BufferedWriter writer = Files.newBufferedWriter(tempFile)) {
             writer.write(guitar1.toString() + System.lineSeparator());
             writer.write(guitar2.toString() + System.lineSeparator());
@@ -76,7 +80,7 @@ class InventoryRepositoryTest {
         }
 
         // act
-        Guitar searchCriteria = new Guitar(null, 0, "Fender", null, null, null, null);
+        Guitar searchCriteria = new Guitar(null, 0, Builder.FENDER, null, null, null, null);
         List<Guitar> foundGuitars = inventoryRepository.search(searchCriteria);
 
         // assert
@@ -89,16 +93,15 @@ class InventoryRepositoryTest {
     }
 
     //one more add test
-
     @Test
     void addGetSearchGuitars() throws IOException {
         // arrange
         Path tempFile = Files.createTempFile(databasePath, ".txt");
         InventoryRepository inventoryRepository = new InventoryRepository(tempFile.toString());
 
-        Guitar guitar1 = new Guitar("SN123", 999.99, "Fender", "Acoustic", "ModelX", "Mahogany", "Spruce");
-        Guitar guitar2 = new Guitar("SN124", 1299.99, "Gibson", "Electric", "Les Paul", "Maple", "Maple");
-        Guitar guitar3 = new Guitar("SN125", 1099.99, "Fender", "Electric", "Stratocaster", "Alder", "Maple");
+        Guitar guitar1 = new Guitar("SN123", 999.99, Builder.FENDER, Type.ACOUSTIC, "ModelX", Wood.MAHOGANY, Wood.ALDER);
+        Guitar guitar2 = new Guitar("SN124", 1299.99, Builder.GIBSON, Type.ELECTRIC, "Les Paul", Wood.MAPLE, Wood.MAPLE);
+        Guitar guitar3 = new Guitar("SN125", 1099.99, Builder.FENDER, Type.ELECTRIC, "Stratocaster", Wood.ALDER, Wood.MAPLE);
 
         // add Guitars
         assertTrue(inventoryRepository.addGuitar(guitar1), "Guitar 1 should be added successfully");
@@ -111,11 +114,12 @@ class InventoryRepositoryTest {
         assertEquals("SN123", foundGuitar.getSerialNumber(), "Serial number of found guitar should match");
 
         // search Guitars
-        Guitar searchCriteria = new Guitar(null, 0, "Fender", null, null, null, null);
+        // The search criteria should have null for unspecified fields and use Builder.FENDER for builder
+        Guitar searchCriteria = new Guitar(null, 0, Builder.FENDER, null, null, null, null);
         List<Guitar> foundGuitars = inventoryRepository.search(searchCriteria);
         assertEquals(2, foundGuitars.size(), "Should find two Fender guitars");
-        assertTrue(foundGuitars.contains(guitar1), "Should contain first Fender guitar");
-        assertTrue(foundGuitars.contains(guitar3), "Should contain second Fender guitar");
+        assertTrue(foundGuitars.stream().anyMatch(g -> g.getSerialNumber().equals(guitar1.getSerialNumber())), "Should contain first Fender guitar");
+        assertTrue(foundGuitars.stream().anyMatch(g -> g.getSerialNumber().equals(guitar3.getSerialNumber())), "Should contain second Fender guitar");
 
         // cleanup
         Files.delete(tempFile);

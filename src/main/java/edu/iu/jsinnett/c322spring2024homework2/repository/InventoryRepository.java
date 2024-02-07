@@ -1,5 +1,9 @@
 package edu.iu.jsinnett.c322spring2024homework2.repository;
 
+
+import edu.iu.jsinnett.c322spring2024homework2.enums.Builder;
+import edu.iu.jsinnett.c322spring2024homework2.enums.Type;
+import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
 import edu.iu.jsinnett.c322spring2024homework2.model.Guitar;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -17,6 +21,7 @@ public class InventoryRepository {
     public InventoryRepository(@Value("${inventory.database.path}") String databasePath) {
         this.databasePath = databasePath;
     }
+
 
 
     public synchronized boolean addGuitar(Guitar guitar) {
@@ -58,12 +63,14 @@ public class InventoryRepository {
         if (props.length < 7) {
             throw new IllegalArgumentException("Invalid guitar string: " + str);
         }
-        return new Guitar(props[0],
-                Double.parseDouble(props[1]),
-                props[2],
-                props[3],
-                props[4],
-                props[5],
-                props[6]);
+        return new Guitar(
+                props[0], // serialNumber
+                Double.parseDouble(props[1]), // price
+                Builder.valueOf(props[2].toUpperCase()), // builder
+                Type.valueOf(props[3].toUpperCase()), // type
+                props[4], // model
+                Wood.valueOf(props[5].toUpperCase()), // backWood
+                Wood.valueOf(props[6].toUpperCase()) // topWood
+        );
     }
 }

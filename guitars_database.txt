@@ -1,0 +1,2 @@
+12345,1500.0,Fender,Electric,Stratocaster,Alder,Maple
+00000,2000.0,Fender,Electric,Stratocaster,Maple,Maple
