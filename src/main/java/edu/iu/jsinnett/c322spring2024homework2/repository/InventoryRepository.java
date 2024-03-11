@@ -7,6 +7,7 @@ import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
 import edu.iu.jsinnett.c322spring2024homework2.model.Guitar;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class InventoryRepository {
 
     private String databasePath = "guitars_database.txt";
@@ -47,16 +49,26 @@ public class InventoryRepository {
         }
     }
 
-    public List<Guitar> search(Guitar searchCriteria) {
+    public List<Guitar> search(String modelName) {
         try (BufferedReader br = new BufferedReader(new FileReader(databasePath))) {
-            return br.lines()
-                    .map(this::stringToGuitar)
-                    .filter(g -> g.matches(searchCriteria))
-                    .collect(Collectors.toList());
+            if (modelName == null || modelName.isEmpty()) {
+                // If no model name is provided, return all guitars
+                return br.lines()
+                        .map(this::stringToGuitar)
+                        .collect(Collectors.toList());
+            } else {
+                // If a model name is provided, filter by model name
+                return br.lines()
+                        .map(this::stringToGuitar)
+                        .filter(g -> g.getModel().equalsIgnoreCase(modelName))
+                        .collect(Collectors.toList());
+            }
         } catch (IOException e) {
             return new ArrayList<>();
         }
     }
+
+
 
     private Guitar stringToGuitar(String str) {
         String[] props = str.split(",");

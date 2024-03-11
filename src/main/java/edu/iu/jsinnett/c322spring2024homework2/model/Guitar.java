@@ -1,6 +1,4 @@
 package edu.iu.jsinnett.c322spring2024homework2.model;
-
-
 import edu.iu.jsinnett.c322spring2024homework2.enums.Builder;
 import edu.iu.jsinnett.c322spring2024homework2.enums.Type;
 import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
@@ -9,13 +7,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class Guitar {
-
-
-    //small edit to see if I can get the github push to work
-
-
-
-    //main variables
     String serialNumber;
     double price;
     Builder builder;
@@ -31,55 +22,42 @@ public class Guitar {
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
-
     public double getPrice() {
         return price;
     }
-
     public void setPrice(double price) {
         this.price = price;
     }
-
     public Builder getBuilder() {
         return builder;
     }
-
     public void setBuilder(Builder builder) {
         this.builder = builder;
     }
-
     public Type getType() {
         return type;
     }
-
     public void setType(Type type) {
         this.type = type;
     }
-
     public String getModel() {
         return model;
     }
-
     public void setModel(String model) {
         this.model = model;
     }
-
     public Wood getBackWood() {
         return backWood;
     }
-
     public void setBackWood(Wood backWood) {
         this.backWood = backWood;
     }
-
     public Wood getTopWood() {
         return topWood;
     }
-
     public void setTopWood(Wood topWood) {
         this.topWood = topWood;
     }
-
     public Guitar(String serialNumber, double price, Builder builder, Type type, String model, Wood backWood, Wood topWood) {
         this.serialNumber = serialNumber;
         this.price = price;
@@ -89,17 +67,6 @@ public class Guitar {
         this.backWood = backWood;
         this.topWood = topWood;
     }
-
-    //getter and setter functions
-
-
-    //constructors
-
-
-// inside the Guitar class
-
-
-    //new model function for the restAPI
     public boolean matches(Guitar other) {
         if (other.getSerialNumber() != null && !this.serialNumber.equals(other.getSerialNumber())) {
             return false;
@@ -124,8 +91,6 @@ public class Guitar {
         }
         return true;
     }
-
-
     @Override
     public String toString() {
         return serialNumber + "," +
@@ -136,7 +101,6 @@ public class Guitar {
                 backWood.name() + "," +
                 topWood.name();
     }
-
     private Guitar stringToGuitar(String str) {
         String[] props = str.split(",");
         if (props.length < 7) {
@@ -167,14 +131,8 @@ public class Guitar {
                 Objects.equals(backWood, guitar.backWood) &&
                 Objects.equals(topWood, guitar.topWood);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(serialNumber, price, builder, type, model, backWood, topWood);
     }
-
-
-
-
-
 }

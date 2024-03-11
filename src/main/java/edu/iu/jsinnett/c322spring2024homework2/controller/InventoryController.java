@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/guitars")
 public class InventoryController {
 
@@ -20,16 +21,8 @@ public class InventoryController {
     }
 
     @GetMapping("/search")
-    public List<Guitar> search(@RequestParam(required = false) String serialNumber,
-                               @RequestParam(required = false) Double price,
-                               @RequestParam(required = false) Builder builder,
-                               @RequestParam(required = false) Type type,
-                               @RequestParam(required = false) String model,
-                               @RequestParam(required = false) Wood backWood,
-                               @RequestParam(required = false) Wood topWood) {
-        // Create a new Guitar object using enums for builder, type, backWood, and topWood
-        Guitar searchCriteria = new Guitar(serialNumber, price, builder, type, model, backWood, topWood);
-        return inventoryRepository.search(searchCriteria);
+    public List<Guitar> search(@RequestParam(required = false) String model) {
+        return inventoryRepository.search(model);
     }
 
     @PostMapping("/add")
