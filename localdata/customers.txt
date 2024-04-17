@@ -1,1 +1,2 @@
 john,$2a$10$ypmfyn8tsnnj0iP5B/.KMeBg48ANJzVpVCh2FStIDE7pDpgqzQ7nS,john@email.com
+johndoe,$2a$10$Mq9kyQpl8ixLehTr25aAweuP3PBsyntdOGUqtpShwmLExhleFbSxS,johndoe@gmail.com
