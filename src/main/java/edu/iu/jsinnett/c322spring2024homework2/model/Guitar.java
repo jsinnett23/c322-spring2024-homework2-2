@@ -2,18 +2,28 @@ package edu.iu.jsinnett.c322spring2024homework2.model;
 import edu.iu.jsinnett.c322spring2024homework2.enums.Builder;
 import edu.iu.jsinnett.c322spring2024homework2.enums.Type;
 import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
+import jakarta.persistence.*;
+
 
 import java.util.Locale;
 import java.util.Objects;
 
+@Entity
 public class Guitar {
-    String serialNumber;
-    double price;
-    Builder builder;
-    Type type;
-    String model;
-    Wood backWood;
-    Wood topWood;
+    @Id
+    private String serialNumber;
+    private double price;
+    @Enumerated(EnumType.STRING)
+    private Builder builder;
+    @Enumerated(EnumType.STRING)
+    private Type type;
+    private String model;
+    @Enumerated(EnumType.STRING)
+    private Wood backWood;
+    @Enumerated(EnumType.STRING)
+    private Wood topWood;
+
+    protected Guitar() {}
 
     public String getSerialNumber() {
         return serialNumber;

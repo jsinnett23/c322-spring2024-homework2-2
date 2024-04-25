@@ -1,5 +1,7 @@
 package edu.iu.jsinnett.c322spring2024homework2.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Builder {
     FENDER, MARTIN, GIBSON, COLLINGS, OLSON, RYAN, PRS, ANY;
 
@@ -15,4 +17,6 @@ public enum Builder {
             default: return "Unspecified";
         }
     }
+
+
 }

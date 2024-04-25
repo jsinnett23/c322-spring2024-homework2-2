@@ -1,2 +1,3 @@
 john,$2a$10$ypmfyn8tsnnj0iP5B/.KMeBg48ANJzVpVCh2FStIDE7pDpgqzQ7nS,john@email.com
 johndoe,$2a$10$Mq9kyQpl8ixLehTr25aAweuP3PBsyntdOGUqtpShwmLExhleFbSxS,johndoe@gmail.com
+newuser,$2a$10$AgAkYWf89TaWbD.Adks0oe1fBYzOjJRab0QU2QgUF75fa7R2tN.AG,newuser@example.com

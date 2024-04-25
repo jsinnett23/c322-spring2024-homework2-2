@@ -1,0 +1,19 @@
+-- Customer table
+CREATE TABLE IF NOT EXISTS customers (
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    PRIMARY KEY (username)
+    );
+
+-- Guitar table
+CREATE TABLE IF NOT EXISTS guitars (
+    serialNumber VARCHAR(255) NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    builder VARCHAR(50) NOT NULL CHECK (builder IN ('FENDER', 'MARTIN', 'GIBSON', 'COLLINGS', 'OLSON', 'RYAN', 'PRS', 'ANY')),
+    type VARCHAR(50) NOT NULL CHECK (type IN ('ACOUSTIC', 'ELECTRIC')),
+    model VARCHAR(255) NOT NULL,
+    backWood VARCHAR(50) NOT NULL CHECK (backWood IN ('INDIAN_ROSEWOOD', 'BRAZILIAN_ROSEWOOD', 'MAHOGANY', 'MAPLE', 'COCOBOLO', 'CEDAR', 'ADIRONDACK', 'ALDER', 'SITKA')),
+    topWood VARCHAR(50) NOT NULL CHECK (topWood IN ('INDIAN_ROSEWOOD', 'BRAZILIAN_ROSEWOOD', 'MAHOGANY', 'MAPLE', 'COCOBOLO', 'CEDAR', 'ADIRONDACK', 'ALDER', 'SITKA')),
+    PRIMARY KEY (serialNumber)
+    );

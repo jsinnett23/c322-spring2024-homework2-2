@@ -1,8 +1,5 @@
 package edu.iu.jsinnett.c322spring2024homework2.controller;
 
-import edu.iu.jsinnett.c322spring2024homework2.enums.Builder;
-import edu.iu.jsinnett.c322spring2024homework2.enums.Type;
-import edu.iu.jsinnett.c322spring2024homework2.enums.Wood;
 import edu.iu.jsinnett.c322spring2024homework2.model.Guitar;
 import edu.iu.jsinnett.c322spring2024homework2.repository.InventoryRepository;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +19,17 @@ public class InventoryController {
 
     @GetMapping("/search")
     public List<Guitar> search(@RequestParam(required = false) String model) {
-        return inventoryRepository.search(model);
+        return inventoryRepository.findByModelContainingIgnoreCase(model);
     }
 
     @PostMapping("/add")
-    public boolean add(@RequestBody Guitar guitar) {
-        return inventoryRepository.addGuitar(guitar);
+    public Guitar add(@RequestBody Guitar guitar) {
+        return inventoryRepository.save(guitar);
     }
+
 
     @GetMapping("/find/{serialNumber}")
     public Guitar find(@PathVariable String serialNumber) {
-        return inventoryRepository.getGuitar(serialNumber);
+        return inventoryRepository.findById(serialNumber).orElse(null);
     }
 }
